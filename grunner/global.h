@@ -5,4 +5,5 @@
 #ifndef GRUNNER_GLOBAL_H
 #define GRUNNER_GLOBAL_H
 #define _DEBUG
+
 #endif //GRUNNER_GLOBAL_H

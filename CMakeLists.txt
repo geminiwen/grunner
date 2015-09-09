@@ -3,5 +3,5 @@ project(GRunner)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
-set(SOURCE_FILES grunner/main.cpp grunner/debug.h grunner/debug.cpp grunner/debug.h grunner/global.h)
+set(SOURCE_FILES grunner/main.cpp grunner/debug.h grunner/debug.cpp grunner/debug.h grunner/global.h grunner/run.h grunner/limit.cpp grunner/limit.h)
 add_executable(GRunner ${SOURCE_FILES})

@@ -3,9 +3,11 @@
 //
 
 #include "debug.h"
-using namespace std;
-void DEBUG(string s) {
+void DEBUG(char *s, ...) {
 #ifdef _DEBUG
-    cout << s << endl;
+    va_list args;
+    va_start(args, s);
+    vprintf(s, args);
+    va_end(args);
 #endif
 }
