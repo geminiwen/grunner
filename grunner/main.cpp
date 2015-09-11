@@ -1,5 +1,6 @@
 #include <iostream>
 #include <unistd.h>
+#include <sys/fcntl.h>
 
 #include "debug.h"
 #include "run.h"
@@ -27,9 +28,17 @@ int main(int args, char* argv[]) {
  * TODO 解析输入
  */
 void init_run(Process *process) {
+
+    process->fin = -1;
+    process->fout = -1;
+
+
+    //test code
     process->time_limit = 2000;
     process->memory_limit = 64 * 1024;
-    process->path = "/Users/geminiwen/Code/ClionProjects/grunner/test/test.out";
+    process->fin = open("/Users/geminiwen/Code/ClionProjects/grunner/test/test.in", O_RDONLY);
+    process->fout = open("/Users/geminiwen/Code/ClionProjects/grunner/test/test.out", O_WRONLY | O_CREAT);
+    process->path = "/Users/geminiwen/Code/ClionProjects/grunner/test/test";
 }
 
 /**
@@ -38,13 +47,25 @@ void init_run(Process *process) {
 void run_it(Process *process) {
     set_process_limit(process);
 
-    //TODO 重定向输入输出流
+    if (process->fin != -1) {
+        dup2(process->fin, STDIN_FILENO);
+    }
+
+    if (process->fout != -1) {
+        dup2(process->fout, STDOUT_FILENO);
+    }
+    if (setuid(0)) {
+        perror("set uid failed");
+    }
+    if (chroot("./")) {
+        perror("chroot error");
+    };
     execv(process->path, NULL);
 }
 
 
 /**
- * 解析结果
+ * 解析运行结果
  */
 void resolve(int pid, Process *process, Result *rst) {
     int status;
@@ -76,10 +97,10 @@ void resolve(int pid, Process *process, Result *rst) {
     } else {
         if (rst->time_used > process->time_limit)
             rst->judge_result = TLE;
-        else if (rst->memory_used > process->memory_limit)
+        else if (rst->memory_used > process->memory_limit) {
             rst->judge_result = MLE;
-        else
+        } else {
             rst->judge_result = AC;
+        }
     }
-
 }

@@ -1,7 +1,9 @@
 #include <stdio.h>
 
 int main() {
-    sleep(10);
-    printf("end of the work\n");
+    int a,b;
+    while(~scanf("%d%d",&a,&b)) {
+        printf("%d\n", a+b);
+    }
     return 0;
 }

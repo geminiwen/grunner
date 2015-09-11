@@ -7,8 +7,10 @@
 typedef struct {
     char* path;
     char* const* args;
+    int fin;
+    int fout;
     rlim_t time_limit;     //in million seconds
-    rlim_t memory_limit;   //in killo byte
+    rlim_t memory_limit;   //in kilo byte
 } Process;
 
 typedef struct {
