@@ -9,6 +9,7 @@ typedef struct {
     char* const* args;
     int fin;
     int fout;
+    uid_t uid;
     rlim_t time_limit;     //in million seconds
     rlim_t memory_limit;   //in kilo byte
 } Process;

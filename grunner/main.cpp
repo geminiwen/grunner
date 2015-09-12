@@ -31,11 +31,13 @@ void init_run(Process *process) {
 
     process->fin = -1;
     process->fout = -1;
+    process->uid = -1;
 
 
     //test code
     process->time_limit = 2000;
     process->memory_limit = 64 * 1024;
+    process->uid = 1000;
     process->fin = open("/Users/geminiwen/Code/ClionProjects/grunner/test/test.in", O_RDONLY);
     process->fout = open("/Users/geminiwen/Code/ClionProjects/grunner/test/test.out", O_WRONLY | O_CREAT);
     process->path = "/Users/geminiwen/Code/ClionProjects/grunner/test/test";
@@ -54,8 +56,9 @@ void run_it(Process *process) {
     if (process->fout != -1) {
         dup2(process->fout, STDOUT_FILENO);
     }
-    if (setuid(0)) {
-        perror("set uid failed");
+
+    if (process->uid != -1) {
+        setuid(process->uid);
     }
     if (chroot("./")) {
         perror("chroot error");
