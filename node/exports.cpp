@@ -84,15 +84,12 @@ namespace grunner {
             process.memory_limit = memoryLimit->Uint32Value();
         }
 
-        printf("set ok!\n");
-
         int pid = vfork();
         if (pid == 0) {
             run_it(&process);
         } else if (pid > 0) {
             resolve(pid, &process, &result);
             int judgeResult = result.judge_result;
-            printf("judge_result:%d\n", judgeResult);
             Local<Number> judgeResultNumber = Number::New(isolate, judgeResult);
             args.GetReturnValue().Set(judgeResultNumber);
         }
