@@ -1,12 +1,14 @@
 //
-// Created by 温盛章 on 15/9/9.
+// Created by Gemini Wen on 15/9/12.
 //
 
-#ifndef GRUNNER_RUN_H
-#define GRUNNER_RUN_H
+#ifndef SRC_RUN_H
+#define SRC_RUN_H
+#include <unistd.h>
+#include <sys/resource.h>
+
 typedef struct {
     char* path;
-    char* const* args;
     int fin;
     int fout;
     uid_t uid;
@@ -37,4 +39,4 @@ void init_run(Process *process);
 void run_it(Process *process);
 void resolve(int pid, Process *process, Result *rst);
 
-#endif //GRUNNER_RUN_H
+#endif //SRC_RUN_H

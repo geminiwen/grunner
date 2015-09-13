@@ -1,52 +1,35 @@
-#include <iostream>
-#include <unistd.h>
-#include <sys/fcntl.h>
+//
+// Created by Gemini Wen on 15/9/12.
+//
 
-#include "debug.h"
 #include "run.h"
+#include <iostream>
+#include <sys/fcntl.h>
+#include "debug.h"
 #include "limit.h"
 
-using namespace std;
-
-int main(int args, char* argv[]) {
-    Process process = {0};
-    Result result = {0};
-    init_run(&process);
-
-    int pid = vfork();
-    if (pid == 0) {
-        run_it(&process);
-    } else if (pid > 0) {
-        resolve(pid, &process, &result);
-    }
-    return 0;
-}
 
 /**
  * 初始化进程参数
  *
- * TODO 解析输入
  */
 void init_run(Process *process) {
 
     process->fin = -1;
     process->fout = -1;
-    process->uid = -1;
+    process->uid = 0;
+    process->path = NULL;
 
-
-    //test code
-    process->time_limit = 2000;
+    process->time_limit = 1000;
     process->memory_limit = 64 * 1024;
-    process->fin = open("/Users/geminiwen/Code/ClionProjects/grunner/test/test.in", O_RDONLY);
-    process->fout = open("/Users/geminiwen/Code/ClionProjects/grunner/test/test.out", O_WRONLY | O_CREAT);
-    process->path = "/Users/geminiwen/Code/ClionProjects/grunner/test/test";
+
+
 }
 
 /**
  * 设置进程资源限制，运行进程
  */
 void run_it(Process *process) {
-    set_process_limit(process);
 
     if (process->fin != -1) {
         dup2(process->fin, STDIN_FILENO);
@@ -56,10 +39,12 @@ void run_it(Process *process) {
         dup2(process->fout, STDOUT_FILENO);
     }
 
-    if (process->uid != -1) {
-        setuid(process->uid);
+    setuid(process->uid);
+
+    if (process->path != NULL) {
+        set_process_limit(process);
+        execv(process->path, NULL);
     }
-    execv(process->path, NULL);
 }
 
 
