@@ -89,8 +89,7 @@ namespace grunner {
             run_it(&process);
         } else if (pid > 0) {
             resolve(pid, &process, &result);
-            int judgeResult = result.judge_result;
-            Local<Number> judgeResultNumber = Number::New(isolate, judgeResult);
+            Local<Number> judgeResultNumber = Number::New(isolate, result.judge_result);
             args.GetReturnValue().Set(judgeResultNumber);
         }
     }
