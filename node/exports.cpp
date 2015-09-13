@@ -4,6 +4,7 @@
 
 #include <node.h>
 #include "../deps/run.h"
+#include "../deps/check.h"
 
 
 namespace grunner {
@@ -94,8 +95,30 @@ namespace grunner {
         }
     }
 
+    void check(const FunctionCallbackInfo<Value>& args) {
+        Isolate* isolate = args.GetIsolate();
+
+        if (args.Length() < 2) {
+            isolate->ThrowException(Exception::TypeError(
+                    String::NewFromUtf8(isolate, "Wrong arugments")
+            ));
+            return;
+        }
+
+        int sampleIn;
+        int userIn;
+        int result;
+
+        sampleIn =  args[0]->Int32Value();
+        userIn = args[1]->Int32Value();
+
+        checkDiff(sampleIn, userIn, &result);
+        args.GetReturnValue().Set(Number::New(isolate, result));
+    }
+
     void init (Local<Object> exports) {
         NODE_SET_METHOD(exports, "run", run);
+        NODE_SET_METHOD(exports, "check", check);
     }
 
     NODE_MODULE(grunner, init)
