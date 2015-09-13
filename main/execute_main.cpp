@@ -2,6 +2,7 @@
 #include <unistd.h>
 #include <sys/fcntl.h>
 #include "../deps/run.h"
+#include "../deps/check.h"
 
 using namespace std;
 
@@ -22,7 +23,13 @@ int main(int args, char* argv[]) {
         run_it(&process);
     } else if (pid > 0) {
         resolve(pid, &process, &result);
-        printf("%d\n", result.memory_used);
+
+        int user_out = open("/Users/geminiwen/Code/CLionProjects/grunner/test/test.out", O_RDONLY);
+        int sample_out = open("/Users/geminiwen/Code/CLionProjects/grunner/test/sample.out", O_RDONLY);
+
+        int solved_result;
+        checkDiff(sample_out, user_out, &solved_result);
+        printf("result: %d\n", solved_result);
     }
     return 0;
 }
