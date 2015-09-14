@@ -1,0 +1,25 @@
+{
+  "name": "grunner",
+  "version": "0.0.1",
+  "description": "online judge runner",
+  "main": "test.js",
+  "scripts": {
+    "install": "cmake-js rebuild"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/geminiwen/grunner.git"
+  },
+  "keywords": [
+    "online judge"
+  ],
+  "author": "gemini",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/geminiwen/grunner/issues"
+  },
+  "homepage": "https://github.com/geminiwen/grunner#readme",
+  "devDependencies": {
+    "cmake-js": "^1.0.2"
+  }
+}
