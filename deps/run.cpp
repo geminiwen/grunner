@@ -71,6 +71,7 @@ void resolve(int pid, Process *process, Result *rst) {
                 break;
             case SIGALRM:
             case SIGXCPU:
+                rst->time_used = (long) process->time_limit;
                 rst->judge_result = TLE;
                 break;
             default:
