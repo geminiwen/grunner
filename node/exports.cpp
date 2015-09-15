@@ -90,8 +90,11 @@ namespace grunner {
             run_it(&process);
         } else if (pid > 0) {
             resolve(pid, &process, &result);
-            Local<Number> judgeResultNumber = Number::New(isolate, result.judge_result);
-            args.GetReturnValue().Set(judgeResultNumber);
+            Local<Object> obj = Object::New(isolate);
+            obj->Set(String::NewFromUtf8(isolate, "judgeResult"), Number::New(isolate, result.judge_result));
+            obj->Set(String::NewFromUtf8(isolate, "timeUsed"), Number::New(isolate, result.time_used));
+            obj->Set(String::NewFromUtf8(isolate, "memoryUsed"), Number::New(isolate, result.memory_used));
+            args.GetReturnValue().Set(obj);
         }
     }
 
