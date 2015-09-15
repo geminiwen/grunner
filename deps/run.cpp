@@ -43,7 +43,10 @@ void run_it(Process *process) {
 
     if (process->path != NULL) {
         set_process_limit(process);
-        execv(process->path, NULL);
+        int rl = execlp(process->path, NULL);
+        if (rl) {
+            perror("error");
+        }
     }
 }
 

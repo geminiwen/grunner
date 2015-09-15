@@ -1,3 +1,4 @@
 .idea
 *.iml
 Makefile
+.DS_Store

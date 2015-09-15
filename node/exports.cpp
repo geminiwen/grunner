@@ -19,12 +19,14 @@ namespace grunner {
     using v8::Value;
     using v8::Context;
     using v8::Number;
+    using v8::Function;
+    using v8::Null;
 
     void run(const FunctionCallbackInfo<Value>& args) {
         Isolate* isolate = args.GetIsolate();
         Local<Context> context = Context::New(isolate);
 
-        if (args.Length() < 1) {
+        if (args.Length() < 2) {
             isolate->ThrowException(Exception::TypeError(
                     String::NewFromUtf8(isolate, "Wrong arugments")
             ));
@@ -32,6 +34,7 @@ namespace grunner {
         }
 
         Local<Object> processProps = args[0]->ToObject();
+        Local<Function> callback = Local<Function>::Cast(args[1]);
 
         Local<Value> path;
         processProps->Get(context, String::NewFromUtf8(isolate, "path")).ToLocal(&path);
@@ -94,7 +97,9 @@ namespace grunner {
             obj->Set(String::NewFromUtf8(isolate, "judgeResult"), Number::New(isolate, result.judge_result));
             obj->Set(String::NewFromUtf8(isolate, "timeUsed"), Number::New(isolate, result.time_used));
             obj->Set(String::NewFromUtf8(isolate, "memoryUsed"), Number::New(isolate, result.memory_used));
-            args.GetReturnValue().Set(obj);
+            const unsigned argc = 1;
+            Local<Value> argv[argc] = { obj };
+            callback->Call(Null(isolate), argc, argv);
         }
     }
 
