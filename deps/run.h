@@ -9,6 +9,7 @@
 
 typedef struct {
     char* path;
+    char* const *args;
     int fin;
     int fout;
     uid_t uid;

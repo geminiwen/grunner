@@ -19,6 +19,7 @@ void init_run(Process *process) {
     process->fout = -1;
     process->uid = 0;
     process->path = NULL;
+    process->args = NULL;
 
     process->time_limit = 1000;
     process->memory_limit = 64 * 1024;
@@ -43,7 +44,7 @@ void run_it(Process *process) {
 
     if (process->path != NULL) {
         set_process_limit(process);
-        int rl = execlp(process->path, NULL);
+        int rl = execvp(process->path, process->args);
         if (rl) {
             perror("error");
         }
