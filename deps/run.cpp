@@ -57,7 +57,8 @@ void resolve(int pid, Process *process, Result *rst) {
     //等待一个信号
     wait4(pid, &status, WSTOPPED, &ru);
 
-    rst->time_used = ru.ru_utime.tv_sec * 1000 + ru.ru_utime.tv_usec / 1000;
+    rst->time_used = ru.ru_utime.tv_sec * 1000 + ru.ru_utime.tv_usec / 1000
+                     + ru.ru_stime.tv_sec * 1000 + ru.ru_stime.tv_usec / 1000;
     rst->memory_used = ru.ru_minflt * (sysconf(_SC_PAGESIZE) / 1024);
 
     if (WIFSIGNALED(status)) {
