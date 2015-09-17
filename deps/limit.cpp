@@ -39,10 +39,10 @@ void set_process_limit(Process *process) {
         printf("set RLIMIT_NPROC failure, error no:%d\n", errno);
     }
 
-    rl.rlim_cur = 2;
-    rl.rlim_max = 2;
-    if (setrlimit(RLIMIT_FSIZE, &rl)) {
-        printf("set RLIMIT_FSIZE failure, error no:%d\n", errno);
+    rl.rlim_cur = 0;
+    rl.rlim_max = 0;
+    if (setrlimit(RLIMIT_NOFILE, &rl)) {
+        printf("set RLIMIT_NOFILE failure, error no:%d\n", errno);
     }
 
     // 设置警报
