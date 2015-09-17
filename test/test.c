@@ -3,11 +3,9 @@
 #include <unistd.h>
 
 int main() {
-    while(1) {
-        int p = fork();
-        printf("%d\n", p);
-        fflush(stdout);
-        sleep(1);
-    }
+    int a,b;
+    scanf("%d%d", &a, &b);
+    printf("%d\n", a+b);
+    perror("test");
     return 0;
 }

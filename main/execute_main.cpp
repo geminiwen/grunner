@@ -30,6 +30,7 @@ int main(int args, char* argv[]) {
 
         int solved_result;
         checkDiff(sample_out, user_out, &solved_result);
+        printf("result: %d\n", solved_result);
     }
     return 0;
 }
