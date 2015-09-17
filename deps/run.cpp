@@ -82,8 +82,8 @@ void resolve(int pid, Process *process, Result *rst) {
                 rst->judge_result = RE;
                 break;
         }
-        DEBUG("sig:%d\n" , WTERMSIG(status));
-        DEBUG("result: %d\n", rst->judge_result);
+        DEBUG("signaled signal:%d\n" , WTERMSIG(status));
+        DEBUG("signaled judge result: %d\n", rst->judge_result);
     } else {
         if (rst->time_used > process->time_limit)
             rst->judge_result = TLE;

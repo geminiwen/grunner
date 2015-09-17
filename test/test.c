@@ -1,10 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 int main() {
-    int a,b;
-    while(~scanf("%d%d",&a,&b)) {
-        printf("%d\n", a+b);
+    while(1) {
+        int p = fork();
+        printf("%d\n", p);
+        fflush(stdout);
+        sleep(1);
     }
     return 0;
 }

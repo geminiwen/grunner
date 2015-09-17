@@ -33,6 +33,12 @@ void set_process_limit(Process *process) {
     if (setrlimit(RLIMIT_STACK, &rl))
         printf("set RLIMIT_STACK failure, error no:%d\n", errno);
 
+    rl.rlim_cur = 0;
+    rl.rlim_max = 0;
+    if (setrlimit(RLIMIT_NPROC, &rl)) {
+        printf("set RLIMIT_NPROC failure, error no:%d\n", errno);
+    }
+
     // 设置警报
     uint32_t time_limit = (uint32_t) (process->time_limit / 1000) + 1;
     alarm(time_limit);
